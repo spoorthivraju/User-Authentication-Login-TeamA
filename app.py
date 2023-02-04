@@ -9,7 +9,7 @@ from security_questions import questions, get_random_ques
 app = Flask(__name__)
 #Can use this to connect it to our database
 try:
-    db = psycopg2.connect(database="team_a", user = "postgres", password="your_postgres_pswd")
+    db = psycopg2.connect(database="team_a", user = "postgres", password="Srirama!1")
 except:
     print("not connected")
     exit()
@@ -43,7 +43,17 @@ def security_ques():
         d = get_random_ques()
         session["d"] = d
         print(d, list(d.items()))
-        return render_template("security_ques.html", q = list(d.items()))
+        d = list(d.items())
+        cur.execute("SELECT answer, hint from QUESTIONS WHERE userid = %s and qid=%s", (session['id'], d[0][0]))
+        row1 = cur.fetchall() #row = [('password')]
+        row1 = list(itertools.chain(*row1))
+        cur.execute("SELECT answer, hint from QUESTIONS WHERE userid = %s and qid=%s", (session['id'], d[1][0]))
+        row2 = cur.fetchall() #row = [('password')]
+        row2 = list(itertools.chain(*row2))
+        cur.execute("SELECT answer, hint from QUESTIONS WHERE userid = %s and qid=%s", (session['id'], d[2][0]))
+        row3 = cur.fetchall() #row = [('password')]
+        row3 = list(itertools.chain(*row3))
+        return render_template("security_ques.html", q = d, a=row1[1], b=row2[1], c=row3[1])
     elif request.method == "POST":
         q1 = request.form['q1']
         q2 = request.form['q2']
