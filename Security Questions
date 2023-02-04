@@ -1,19 +1,18 @@
-import random
 # Define a list of security questions and answers
-
+import random
 que=['1.What is your mother\'s maiden name?','2.What was the name of your first pet?\n','3.What is your favorite color?\n',
 '4.Where was your best family vacation as a kid?\n','5.When you were young, what did you want to be when you grew up?\n']
-
 security_questions = [
-    {'question': 'What is your mother\'s maiden name?', 'answer': ''},
-    {'question': 'What was the name of your first pet?', 'answer': ''},
-    {'question': 'What is your favorite color?', 'answer': ''},
-    {'question':  'Where was your best family vacation as a kid?', 'answer':''},
-    {'question':  'When you were young, what did you want to be when you grew up?', 'answer':''}
+    {'question': 'What is your mother\'s maiden name?', 'answer': '','hint':''},
+    {'question': 'What was the name of your first pet?', 'answer': '','hint':''},
+    {'question': 'What is your favorite color?', 'answer': '','hint':''},
+    {'question':  'Where was your best family vacation as a kid?', 'answer':'','hint':''},
+    {'question':  'When you were young, what did you want to be when you grew up?', 'answer':'','hint':''}
 ]
-
 for i in range(0,5):
     security_questions[i]['answer']=input(que[i])
+    security_questions[i]['hint']=input('Enter hint for the question above : ')
+
 
 # Function to verify the answer to a security question
 def verify_answer(question, answer):
@@ -28,19 +27,20 @@ def two_factor_auth(username, password):
     if username == 'user123' and password == 'pass123':
         # Prompt user to answer a security question
         print('Login Successful')
-        for i in range(3):
+        for i in range(0,3):
             l=[]
-            if random.choice(security_questions) not in l:
-                r=random.choice(security_questions)
+            r=random.choice(security_questions)
+            if r not in l:
+                print('Hint for the below Question is ',r['hint'])
                 answer = input(r["question"])
                 if verify_answer(r['question'], answer):
                     print('Access granted!')
+                    l.append(r)
                 else:
                     print('Wrong Answer!..Access denied!')
                     return
             else:
                 i-=1
-            l.append(r)
     else:
         print('Wrong Credentials!..Access denied!')
 
