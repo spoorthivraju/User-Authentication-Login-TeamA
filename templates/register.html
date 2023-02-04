@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    </head>
+    <body>
+        
+        <h2>Please Enter Your Details</h2>
+        <form method = 'post' action = '/registerUser'>
+            <div style = "width: 85%;">
+            <div class="mb-3" style = "margin-left: 20px;">
+                <label for="Cfname" class="form-label">First Name</label>
+                <input type="cfname" name = "cfname" class="form-control" id="cfname" aria-describedby="cfname" required>
+            </div>
+            <div class="mb-3" style = "margin-left: 20px;">
+                <label for="clname" class="form-label">Last Name</label>
+                <input type="clname" class="form-control" name = 'clname' id="clname" aria-describedby="clname" required>
+            </div>
+            <div class="mb-3" style = "margin-left: 20px;">
+                <label for="cuname" class="form-label">User Name</label>
+                <input type="cuname" class="form-control" name = 'cuname' id="cuname" aria-describedby="cuname" required>
+            </div>
+            <div class="mb-3" style = "margin-left: 20px;">
+                <label for="cphone" class="form-label">Phone Number</label>
+                <input type="tel" pattern=".{10}" name = 'cphone' class="form-control" id="cphone" oninput="check(this)" required>
+            </div>
+            <div class="mb-3" style = "margin-left: 20px;">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" name = 'cemail' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your details with anyone else.</div>
+            </div>
+            <div class="mb-3" style = "margin-left: 20px;">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" name = 'cpassword' class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style = "margin-left: 20px;">Submit</button>
+        </div>
+        </form>
+
+    </body>
+</html>
