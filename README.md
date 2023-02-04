@@ -7,3 +7,5 @@ Here, I used 127.0.0.1:5000/register to open the page, we can create more html p
 To create the db:
 open the psql shell and type:
 \i  '/Users/path_to_file/create.sql'
+
+![Alt text](schema.png?raw=true "Schema")
