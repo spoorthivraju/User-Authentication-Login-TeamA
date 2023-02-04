@@ -8,4 +8,4 @@ To create the db:
 open the psql shell and type:
 \i  '/Users/path_to_file/create.sql'
 
-![Alt text](schema.png?raw=true "Schema")
+![schema](https://raw.githubusercontent.com/spoorthivraju/User-Authentication-Login-TeamA/flask-implementation/.github/schema.png)
