@@ -5,11 +5,11 @@ que=['1.What is your mother\'s maiden name?','2.What was the name of your first 
 '4.Where was your best family vacation as a kid?\n','5.When you were young, what did you want to be when you grew up?\n']
 
 security_questions = [
-    {'question': 'What is your mother\'s maiden name?', 'answer': 'Smitha'},
-    {'question': 'What was the name of your first pet?', 'answer': 'Snoofy'},
-    {'question': 'What is your favorite color?', 'answer': 'Green'},
-    {'question':  'Where was your best family vacation as a kid?', 'answer':'Hyderabad'},
-    {'question':  'When you were young, what did you want to be when you grew up?', 'answer':'Cricketer'}
+    {'question': 'What is your mother\'s maiden name?', 'answer': ''},
+    {'question': 'What was the name of your first pet?', 'answer': ''},
+    {'question': 'What is your favorite color?', 'answer': ''},
+    {'question':  'Where was your best family vacation as a kid?', 'answer':''},
+    {'question':  'When you were young, what did you want to be when you grew up?', 'answer':''}
 ]
 
 for i in range(0,5):
