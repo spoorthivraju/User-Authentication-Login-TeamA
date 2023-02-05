@@ -18,6 +18,7 @@ CREATE TABLE QUESTIONS (
     userid int,
 	qid INT,	
     answer varchar(30) not null,
+	hint varchar(100) not null,
 	PRIMARY KEY (userid, qid),
     FOREIGN KEY (userid) REFERENCES USERS(userid)  
 );
