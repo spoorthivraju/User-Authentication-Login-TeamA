@@ -6,7 +6,7 @@
 - [X] Verification of security questions(flash any three random question, the ans should match the prev one)
 - [X] Integration of all modules 
 - [X] Database schema 
-- [] Additional module 
+- [ ] Additional module 
 
 # Login-teamname
 
