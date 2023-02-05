@@ -1,5 +1,5 @@
 import psycopg2
-from flask import Flask, render_template, request, redirect, url_for, render_template, session, send_from_directory, send_file, flash, abort, make_response
+from flask import Flask, render_template, request, redirect, url_for, render_template, session, send_from_directory, send_file, flash, abort, make_response, flash
 import decimal
 import itertools 
 from otp import send_email, generateOtp
@@ -7,10 +7,11 @@ from otp import send_email, generateOtp
 from security_questions import questions, get_random_ques
 from password import password_check
 
+
 app = Flask(__name__)
 #Can use this to connect it to our database
 try:
-    db = psycopg2.connect(database="team_a", user = "postgres", password="Srirama!1")
+    db = psycopg2.connect(database="team_a", user = "postgres", password="Aruba@123")
 except:
     print("not connected")
     exit()
@@ -86,6 +87,11 @@ def login():
     except Exception as e:
         return render_template("error.html", error="Invalid access " + str(e))
 
+@app.route('/forgot_password', methods=['GET'])
+def forgot_password():
+        return render_template("forgot_password.html")
+        
+
 @app.route('/otp', methods=['GET', 'POST'])
 def otp():
     try:
@@ -93,8 +99,18 @@ def otp():
             email = session['email']
             send_email(email)
             return render_template("sample.html", msg="sent email to" + email)
+        #elif request.method == "POST"
     except Exception as e:
         return render_template("error.html", error="Invalid access " + str(e))
+
+@app.route('/send_otp', methods=['POST'])
+def send_otp():
+    if request.method == "POST":
+        email = request.form['email']
+        otp = generateOtp()
+        send_email(email,otp)
+        return render_template("reset_pw_otp.html")
+
 
 @app.route('/security-ques', methods=['GET', 'POST'])
 def security_ques():
@@ -150,6 +166,33 @@ def after_otp():
             return render_template("sample.html", msg="sent email to" + email)
     except Exception as e:
         return render_template("error.html", error="Invalid access " + str(e))
+
+@app.route('/reset-pw', methods=['GET', 'POST'])
+def reset_pw():
+        return render_template("reset_pw.html")
+
+@app.route('/check', methods=['POST'])
+def check():
+    new_password = request.form['new_password']
+    print(new_password)
+    confirm_password = request.form['confirm_password']
+    print(confirm_password)
+    email = session['email']
+    print(session['email'])
+    if(new_password == confirm_password):
+        if not password_check(new_password):
+            return render_template("reset_pw.html", msg="unsatisfying password")
+        elif len(new_password. splitlines()) > 1:
+            return render_template("reset_pw.html", msg="unsatisfying password")
+        else:
+            cur.execute("UPDATE users SET pswd=%s where email=%s", (new_password, email))
+            db.commit()
+            flash("Password updated!")  
+            return render_template("login.html", msg="Password updated")
+    
+    else:
+        return render_template("reset_pw.html", msg="The passwords don't match")
+    
 
 @app.route('/after-login', methods=['POST'])
 def after_login():

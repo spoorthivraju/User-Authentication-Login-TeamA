@@ -5,7 +5,7 @@ def password_check(pswd):
     digit = 0
     specialchar = 0
     if len(pswd) < 8:
-        return "less than 8 chars"
+        return 0
     for i in pswd:
         if (i.isupper()):
             uppercase += 1
@@ -16,9 +16,9 @@ def password_check(pswd):
         elif i in special_char:
             specialchar += 1
     if uppercase < 1 or specialchar < 1 or lowercase < 1 or digit < 1:
-        return "Use stleast one uppercase, lowercase, digit and special_char(!@#$&*()^%)"
+        return 0
     else:
-        return "success"
+        return 1
         
 
 
