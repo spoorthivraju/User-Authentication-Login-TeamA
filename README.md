@@ -1,5 +1,5 @@
 ## Tasks
-1) User authentication system - onboarding(name, email, password) - [X]
+- [X] User authentication system - onboarding(name, email, password) - [X]
 2) Security questions( 3 ques, hints, ans from any 5 random) - [X]
 3) Actual Login(3 factor login-username, password) - - [X]
 4) OTP Module(send email with OTP) - [X]
