@@ -1,12 +1,12 @@
 ## Tasks
-- [X] User authentication system - onboarding(name, email, password) - [X]
-2) Security questions( 3 ques, hints, ans from any 5 random) - [X]
-3) Actual Login(3 factor login-username, password) - - [X]
-4) OTP Module(send email with OTP) - [X]
-5) Verification of security questions(flash any three random question, the ans should match the prev one) - [X]
-6) Integration of all modules - [X]
-7) Database schema - [X]
-8) Additional module - []
+- [X] User authentication system - onboarding(name, email, password)
+- [X] Security questions( 3 ques, hints, ans from any 5 random) 
+- [X] Actual Login(3 factor login-username, password) 
+- [X] OTP Module(send email with OTP)
+- [X] Verification of security questions(flash any three random question, the ans should match the prev one)
+- [X] Integration of all modules 
+- [X] Database schema 
+- [X] Additional module 
 
 # Login-teamname
 
