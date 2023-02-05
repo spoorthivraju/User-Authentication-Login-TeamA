@@ -10,7 +10,8 @@ open the psql shell and type:
 ## Schema
 <img width="568" alt="schema" src="https://user-images.githubusercontent.com/73352576/216787399-566ede2e-d027-4927-bbc2-a2556ab6c3ac.png">
 
-##database content
-<img width="783" alt="db-contents" src="https://user-images.githubusercontent.com/73352576/216804970-4eb05ab5-bf26-4012-a90b-f913cc9d6c08.png">
+##Database content
+
+<img width="568" alt="db-contents" src="https://user-images.githubusercontent.com/73352576/216804970-4eb05ab5-bf26-4012-a90b-f913cc9d6c08.png">
 
 
