@@ -18,6 +18,10 @@
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password" name = 'cpassword' class="form-control" id="exampleInputPassword1" required>
             </div>
+            <div>
+                <a href="{{ url_for('forgot_password') }}">Forgot Password? </a>
+                <!--<button type="submit" onclick='/password_reset'>Forgot Password?</button> -->
+            </div>
             <button type="submit" class="btn btn-primary" style = "margin-left: 20px;">Submit</button>
         </div>
         </form>
