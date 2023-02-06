@@ -31,6 +31,8 @@ open the psql shell and type:
 \i  '/Users/path_to_file/create.sql'
 ## Schema
 <img width="568" alt="schema" src="https://user-images.githubusercontent.com/73352576/216787399-566ede2e-d027-4927-bbc2-a2556ab6c3ac.png">
+<img width="755" alt="users_schema" src="https://user-images.githubusercontent.com/73352576/217020210-412655e3-ed59-4d68-9584-a2b3bd55691d.png">
+
 
 ## Database content
 
