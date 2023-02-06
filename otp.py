@@ -1,6 +1,7 @@
 import math
 import random
 import smtplib
+import json
 from email.message import EmailMessage
 
 #function to generate the otp
@@ -13,23 +14,31 @@ def generate_otp():
     otp = OTP + " is your OTP"
     return OTP
 
-def send_email(sender_email, otp):
+def send_email(receiver_email, otp):
     msg = EmailMessage()
     #otp = generate_otp()
     msg.set_content(otp)
 
-    #asking user email
-    #emailid = input("Enter your email: ")
+    #getting credentials from the json
+
+    f = open('config.json')
+    # returns JSON object as a dictionary
+    data = json.load(f)
+    email_sender_data = data['email_auth_cred']
+    
+    #extracting credentials
+    senders_mail = email_sender_data['senders_mail']
+    sender_mail_pswd =email_sender_data['sender_mail_pswd']
 
 
     #adding message to the mail
     msg['Subject'] = 'OTP for Login'
-    msg['From'] = "dinsja02@gmail.com"
-    msg['To'] = sender_email
+    msg['From'] = senders_mail
+    msg['To'] = receiver_email
 
     # Send the message via our own SMTP server.
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.login("dinsja02@gmail.com", "pbcyatsbssfjjavn")
+    server.login(senders_mail, sender_mail_pswd)
     server.send_message(msg)
     server.quit()
 
