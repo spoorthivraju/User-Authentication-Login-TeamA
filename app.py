@@ -13,7 +13,7 @@ app = Flask(__name__)
 DB connection
 '''
 try:
-    db = psycopg2.connect(database="team_a", user = "postgres", password="Srirama!1")
+    db = psycopg2.connect(database="team_a", user = "postgres", password="your_pswd")
 except:
     print("not connected")
     exit()
