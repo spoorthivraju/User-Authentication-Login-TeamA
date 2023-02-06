@@ -87,7 +87,7 @@ def register():
 
             if phone not in db_phonenumber and email not in db_email and user_name not in db_username: 
                 if check_password != 1:
-                    return render_template("register.html", error="Password not according to contraints", q=q)
+                    return render_template("register.html", error="Password not according to contraints", q=questions)
                 cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, password, first_name, last_name, phone, email))
 
                 entered_answers_and_hints = ((user_id, 1, question1, hint1), (user_id, 2, question2, hint2), (user_id, 3, question3, hint3), \
@@ -99,13 +99,13 @@ def register():
 
                 return render_template("login.html", msg = "login to continue")
 
-            elif phone in c_ph:
+            elif phone in phone:
                 return render_template("register.html", error = "phone number already exists!", q = questions)
 
-            elif email in c_mail:
+            elif email in email:
                 return render_template("register.html", error = "mail id already exists!",q = questions)
 
-            elif user_name in c_user:
+            elif user_name in user_name:
                 return render_template("register.html", error = "username already exists!", q = questions)
 
             elif check_password != 1:
@@ -269,7 +269,7 @@ def security_ques():
                 return render_template("sample2.html", msg="successful login")
 
             else:
-                return render_template("security_ques.html", error="wrong answers", q = random_questions, a=db_answer1[1], b=db_answer2[1], c=db_answe3[1])
+                return render_template("security_ques.html", error="wrong answers", q = random_questions, a=db_answer1[1], b=db_answer2[1], c=db_answer3[1])
 
     except Exception as error:
         return render_template("error.html", error="Invalid access "+ str(error))
