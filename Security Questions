@@ -1,0 +1,50 @@
+import random
+# Define a list of security questions and answers
+
+que=['1.What is your mother\'s maiden name?','2.What was the name of your first pet?\n','3.What is your favorite color?\n',
+'4.Where was your best family vacation as a kid?\n','5.When you were young, what did you want to be when you grew up?\n']
+
+security_questions = [
+    {'question': 'What is your mother\'s maiden name?', 'answer': ''},
+    {'question': 'What was the name of your first pet?', 'answer': ''},
+    {'question': 'What is your favorite color?', 'answer': ''},
+    {'question':  'Where was your best family vacation as a kid?', 'answer':''},
+    {'question':  'When you were young, what did you want to be when you grew up?', 'answer':''}
+]
+
+for i in range(0,5):
+    security_questions[i]['answer']=input(que[i])
+
+# Function to verify the answer to a security question
+def verify_answer(question, answer):
+    for item in security_questions:
+        if item['question'] == question and item['answer'] == answer:
+            return True
+    return False
+
+# Main function to implement two-factor authentication
+def two_factor_auth(username, password):
+    # Verify username and password
+    if username == 'user123' and password == 'pass123':
+        # Prompt user to answer a security question
+        print('Login Successful')
+        for i in range(3):
+            l=[]
+            if random.choice(security_questions) not in l:
+                r=random.choice(security_questions)
+                answer = input(r["question"])
+                if verify_answer(r['question'], answer):
+                    print('Access granted!')
+                else:
+                    print('Wrong Answer!..Access denied!')
+                    return
+            else:
+                i-=1
+            l.append(r)
+    else:
+        print('Wrong Credentials!..Access denied!')
+
+# Example usage
+username = input('Username: ')
+password = input('Password: ')
+two_factor_auth(username, password)
