@@ -14,7 +14,7 @@
 - [X] Change variable names
 - [X] Use multi row insert query
 - [ ] Password Encryption
-- [ ] Config file
+- [X] Config file
 - [ ] Create a table for security questions
 - [ ] De-register 
 - [ ] Add comments
