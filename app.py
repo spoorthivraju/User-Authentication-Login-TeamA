@@ -87,7 +87,7 @@ def register():
 
             if phone not in db_phonenumber and email not in db_email and user_name not in db_username: 
                 if check_password != 1:
-                    return render_template("register.html", error="Password not according to contraints", q=questions)
+                    return render_template("register.html", error="Password not according to contraints", questions=questions)
                 cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, password, first_name, last_name, phone, email))
 
                 entered_answers_and_hints = ((user_id, 1, question1, hint1), (user_id, 2, question2, hint2), (user_id, 3, question3, hint3), \
@@ -99,20 +99,20 @@ def register():
 
                 return render_template("login.html", msg = "login to continue")
 
-            elif phone in phone:
-                return render_template("register.html", error = "phone number already exists!", q = questions)
+            elif phone in db_phonenumber:
+                return render_template("register.html", error = "phone number already exists!", questions = questions)
 
-            elif email in email:
-                return render_template("register.html", error = "mail id already exists!",q = questions)
+            elif email in db_mail:
+                return render_template("register.html", error = "mail id already exists!",questions = questions)
 
-            elif user_name in user_name:
-                return render_template("register.html", error = "username already exists!", q = questions)
+            elif user_name in db_user:
+                return render_template("register.html", error = "username already exists!", questions = questions)
 
             elif check_password != 1:
-                return render_template("register.html", error = "Password not according to contraints", q = questions)
+                return render_template("register.html", error = "Password not according to contraints", questions = questions)
 
             else:
-                return render_template("error.html", error = "email/phone number already exists!", q = questions)
+                return render_template("error.html", error = "email/phone number already exists!", questions = questions)
     except Exception as error:
         return render_template("error.html", error="Invalid access " + str(error))
 
