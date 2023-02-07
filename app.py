@@ -112,10 +112,10 @@ def register():
             elif phone in db_phonenumber:
                 return render_template("register.html", error = "phone number already exists!", questions = questions)
 
-            elif email in db_mail:
+            elif email in db_email:
                 return render_template("register.html", error = "mail id already exists!",questions = questions)
 
-            elif user_name in db_user:
+            elif user_name in db_username:
                 return render_template("register.html", error = "username already exists!", questions = questions)
 
             elif check_password != 1:
@@ -205,11 +205,17 @@ def otp():
 def send_otp():
     if request.method == "POST":
         email = request.form['email']
-        otp = generate_otp()
-        session['otp']=otp
-        send_email(email,otp)
-        session['email'] = email
-        return render_template("reset_pw_otp.html")
+        print(email)
+        cursor.execute("SELECT email FROM users WHERE email='{0}'".format(email))
+        row = cursor.fetchall()
+        if(row):
+            session['reset_email'] = email
+            otp = generate_otp()
+            session['reset_otp'] = otp
+            send_email(email,otp)
+            return render_template("reset_pw_otp.html")
+        else:
+            return render_template("forgot_password.html", msg='Email not registered.')
 
 @app.route('/after-otp', methods=['GET', 'POST'])
 def after_otp():
@@ -312,7 +318,7 @@ def reset_pw():
     if request.method == "POST":
         otp_given = request.form['otp']
 
-    if (otp_given == session['otp']):
+    if (otp_given == session['reset_otp']):
         return render_template("reset_pw.html")
 
     return render_template("sample.html")
@@ -326,29 +332,21 @@ def check():
     print(new_password)
     confirm_password = request.form['confirm_password']
     print(confirm_password)
-    email = session['email']
-    print(session['email'])
+    email = session['reset_email']
+    print(session['reset_email'])
 
     if (new_password == confirm_password):
 
         if not password_check(new_password):
             return render_template("reset_pw.html", msg="unsatisfying password")
 
-        elif len(new_password. splitlines()) > 1:
-            return render_template("reset_pw.html", msg="unsatisfying password")
-
         else:
-            cursor.execute("SELECT username from users where email='"+email+"'")
-            username = cursor.fetchall()
-            username = list(itertools.chain(*username))
-
-            if(len(username)==0):
-                return render_template("login.html", msg="User doesnt exist")   
-
             cursor.execute("UPDATE users SET pswd=%s where email=%s", (new_password, email))
             db.commit()
 
             flash("Password updated!")  
+
+            session.clear()
 
             return render_template("login.html", msg="Password updated")
 
