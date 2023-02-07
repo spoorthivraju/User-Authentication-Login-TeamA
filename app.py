@@ -207,8 +207,8 @@ def send_otp():
         email = request.form['email']
         print(email)
         cursor.execute("SELECT email FROM users WHERE email='{0}'".format(email))
-        row = cursor.fetchall()
-        if(row):
+        db_email = cursor.fetchall()
+        if(db_email):
             session['reset_email'] = email
             otp = generate_otp()
             session['reset_otp'] = otp
@@ -318,7 +318,7 @@ def reset_pw():
     if request.method == "POST":
         otp_given = request.form['otp']
 
-    if (otp_given == session['otp']):
+    if (otp_given == session['reset_otp']):
         return render_template("reset_pw.html")
 
     return render_template("sample.html")
