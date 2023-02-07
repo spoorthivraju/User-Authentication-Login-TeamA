@@ -318,7 +318,7 @@ def reset_pw():
     if request.method == "POST":
         otp_given = request.form['otp']
 
-    if (otp_given == session['reset_otp']):
+    if (otp_given == session['otp']):
         return render_template("reset_pw.html")
 
     return render_template("sample.html")
@@ -340,14 +340,11 @@ def check():
         if not password_check(new_password):
             return render_template("reset_pw.html", msg="unsatisfying password")
 
-        else:
+        else:   
             cursor.execute("UPDATE users SET pswd=%s where email=%s", (new_password, email))
             db.commit()
-
             flash("Password updated!")  
-
             session.clear()
-
             return render_template("login.html", msg="Password updated")
 
     
