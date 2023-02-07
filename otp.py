@@ -2,7 +2,12 @@ import math
 import random
 import smtplib
 from email.message import EmailMessage
+import json
+fname = "config.json"
 
+with open(fname) as f:
+    appConf = json.load(f)
+    
 #function to generate the otp
 def generate_otp():
     #generating otp
@@ -29,7 +34,8 @@ def send_email(sender_email, otp):
 
     # Send the message via our own SMTP server.
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.login("dinsja02@gmail.com", "pbcyatsbssfjjavn")
+    server.login(appConf['email_auth_cred']['senders_mail'],\
+        appConf['email_auth_cred']['sender_mail_pswd'])
     server.send_message(msg)
     server.quit()
 
