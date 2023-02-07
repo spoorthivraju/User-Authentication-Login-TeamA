@@ -7,13 +7,23 @@ from otp import send_email, generate_otp
 from security_questions import get_questions, get_random_questions
 from password import password_check
 from number_verification import mobile_otp,check_mobile_otp
+import json
 
+
+fname = "config.json"
+
+with open(fname) as f:
+    appConf = json.load(f)
+    
+    
 app = Flask(__name__)
 '''
 DB connection
 '''
 try:
-    db = psycopg2.connect(database="team_a", user = "postgres", password="your_pswd")
+    #db = psycopg2.connect(database="team_a", user = "postgres", password="your_pswd")
+    db = psycopg2.connect(database= appConf['database_connection']['database'], user =appConf['database_connection']['user'], \
+        password = appConf['database_connection']['password'])
 except:
     print("not connected")
     exit()
