@@ -8,7 +8,7 @@
 - [X] Verification of security questions(flash any three random question, the ans should match the prev one)
 - [X] Integration of all modules 
 - [X] Database schema 
-- [ ] Additional module 
+- [X] Additional module(forgot password, mobile otp) 
 
 ## Changes
 - [X] Change variable names
