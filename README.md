@@ -13,7 +13,7 @@
 ## Changes
 - [X] Change variable names
 - [X] Use multi row insert query
-- [ ] Password Encryption
+- [X] Password Encryption
 - [X] Config file
 - [ ] Create a table for security questions
 - [X] De-board 
