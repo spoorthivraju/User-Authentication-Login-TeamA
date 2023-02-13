@@ -6,11 +6,11 @@ create database team_a;
 CREATE TABLE USERS (
 	userid INT,	
 	username VARCHAR(15) NOT NULL,
-	pswd VARCHAR(30) NOT NULL, 
+	pswd VARCHAR(200) NOT NULL, 
 	fname VARCHAR(15) NOT NULL,
 	lname VARCHAR(15) NOT NULL UNIQUE,
 	phonenumber VARCHAR(10) UNIQUE,
-    email VARCHAR(30) UNIQUE default 'default',
+    email VARCHAR(30) default 'default',
 	PRIMARY KEY (userid)
 );
 
@@ -29,3 +29,5 @@ CREATE TABLE CUST_OTP (
     PRIMARY KEY(userid),
     FOREIGN KEY (userid) REFERENCES USERS(userid)
 );
+
+
