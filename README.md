@@ -16,7 +16,7 @@
 - [ ] Password Encryption
 - [X] Config file
 - [ ] Create a table for security questions
-- [ ] De-register 
+- [X] De-board 
 - [ ] Add comments
 - [ ] Figure out how to fix default and unique constraint on email
 
