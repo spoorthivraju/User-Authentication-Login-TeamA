@@ -232,7 +232,7 @@ def after_otp():
 
             if (otp == entered_otp):
                 return redirect("/security-ques")
-            return render_template("sample.html", msg="sent email to" + email)
+            return render_template("otp.html", msg="wrong otp")
 
     except Exception as e:
         return render_template("error.html", error="Invalid access " + str(e))
@@ -305,7 +305,7 @@ def after_otp_mobile():
 
             if (check_mobile_otp(otp,entered_otp)=="approved"):
                 return redirect("/security-ques")
-            return render_template("sample.html", msg="sent email to" + email)
+            return render_template("sample.html", error = "Didnt get through", msg="sent email to" + email)
 
     except Exception as e:
         return render_template("error.html", error="Invalid access " + str(e))
@@ -351,9 +351,49 @@ def check():
     else:
         return render_template("reset_pw.html", msg="The passwords don't match")
     
+@app.route('/deboard', methods=['GET', 'POST'])
+def deboard():
+    if request.method == 'GET':
+        return render_template("deboard.html")
+    else:
+        if request.method == "POST":
 
+            email = session['deboard_email']
+            otp = session['deboard_otp']
+            entered_otp = request.form['otp']
+            print(otp, entered_otp, type(entered_otp), type(otp))
 
+            if (otp == entered_otp):
+                #email
+                cursor.execute("SELECT userid FROM users WHERE email='{0}'".format(email))
+                #cursor.execute("SELECT userid from USERS where email=%s", (email))  
+                user_id = cursor.fetchall()
+                print("check userid", user_id)
+                if user_id == None:
+                    return render_template("sample.html", error="user doesn't exist")
+                user_id = list(itertools.chain(*user_id))
+                cursor.execute("DELETE FROM QUESTIONS where userid=%s", (user_id))
+                cursor.execute("DELETE FROM users where userid=%s", (user_id))
+                db.commit()
+                return render_template("sample.html", msg="deboarded successfully")
+            return render_template("sample.html", msg="Entered otp is wrong")
 
+@app.route('/send_otp_deboard', methods=['POST'])
+def send_otp_deboard():
+    if request.method == "POST":
+        email = request.form['email']
+        print(email)
+        cursor.execute("SELECT email FROM users WHERE email='{0}'".format(email))
+        db_email = cursor.fetchall()
+        print(db_email)
+        if(db_email):
+            session['deboard_email'] = email
+            otp = generate_otp()
+            session['deboard_otp'] = otp
+            send_email(email,otp)
+            return render_template("deboard_otp.html")
+        else:
+            return render_template("sample.html", msg='Email not registered.')
 
 @app.route('/logout', methods=["GET"])
 def logout():
