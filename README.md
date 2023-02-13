@@ -17,8 +17,8 @@
 - [X] Config file
 - [ ] Create a table for security questions
 - [X] De-board 
-- [ ] Add comments
-- [ ] Figure out how to fix default and unique constraint on email
+- [X] Add comments
+- [X] Figure out how to fix default and unique constraint on email(removed unique constraint and added a condition to check for it in app.py)
 
 # Login-teamname
 
