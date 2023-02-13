@@ -1,8 +1,9 @@
 import psycopg2
 import decimal
 import itertools
-import bcrypt 
+
 from flask import Flask, render_template, request, redirect, url_for, render_template, session, send_from_directory, send_file, flash, abort, make_response, flash 
+import bcrypt
 from otp import send_email, generate_otp
 from security_questions import get_questions, get_random_questions
 from password import password_check
@@ -102,9 +103,10 @@ def register():
                 encrypted_pass = bcrypt.hashpw(password, bcrypt.gensalt(10))
                 encrypted_pass = encrypted_pass.decode('utf-8')
                 cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, encrypted_pass, first_name, last_name, phone, email))
+                #cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, password, first_name, last_name, phone, email))
 
                 entered_answers_and_hints = ((user_id, 1, question1, hint1), (user_id, 2, question2, hint2), (user_id, 3, question3, hint3), \
-                    (user_id, 4, question4, hint4), (user_id, 5, question1, hint5))
+                    (user_id, 4, question4, hint4), (user_id, 5, question5, hint5))
                 cursor.executemany("INSERT INTO QUESTIONS (userid, qid, answer, hint) VALUES (%s, %s, %s, %s)", entered_answers_and_hints)
                 db.commit()
 
@@ -144,7 +146,6 @@ def after_login():
             email_userid_password_phone = cursor.fetchall() #row = [('password')]
             email_userid_password_phone = list(itertools.chain(*email_userid_password_phone))
             print(email_userid_password_phone[2], password, type(email_userid_password_phone[0]), type(password))
-            
             p=password.encode('utf-8')
             db_password = email_userid_password_phone[2]
             if bcrypt.checkpw(p, db_password.encode('utf-8')):
@@ -152,7 +153,7 @@ def after_login():
                     session['email'] = email_userid_password_phone[0]
                     email = session['email']
 
-                    if(email != ""):
+                    if(email != "default"):
                         print(email)
                         otp = generate_otp()
                         session['otp'] = otp
@@ -346,7 +347,10 @@ def check():
             return render_template("reset_pw.html", msg="unsatisfying password")
 
         else:   
-            cursor.execute("UPDATE users SET pswd=%s where email=%s", (new_password, email))
+            new_password = new_password.encode('utf-8')
+            encrypted_pass = bcrypt.hashpw(new_password, bcrypt.gensalt(10))
+            encrypted_pass = encrypted_pass.decode('utf-8')
+            cursor.execute("UPDATE users SET pswd=%s where email=%s", (encrypted_pass, email))
             db.commit()
             flash("Password updated!")  
             session.clear()
