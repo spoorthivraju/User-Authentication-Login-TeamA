@@ -1,7 +1,7 @@
 import psycopg2
 import decimal
 import itertools
-
+import bcrypt 
 from flask import Flask, render_template, request, redirect, url_for, render_template, session, send_from_directory, send_file, flash, abort, make_response, flash 
 from otp import send_email, generate_otp
 from security_questions import get_questions, get_random_questions
@@ -98,7 +98,10 @@ def register():
             if phone not in db_phonenumber and email not in db_email and user_name not in db_username: 
                 if check_password != 1:
                     return render_template("register.html", error="Password not according to contraints", questions=questions)
-                cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, password, first_name, last_name, phone, email))
+                password = password.encode('utf-8')
+                encrypted_pass = bcrypt.hashpw(password, bcrypt.gensalt(10))
+                encrypted_pass = encrypted_pass.decode('utf-8')
+                cursor.execute("INSERT INTO USERS VALUES(%s, %s, %s, %s, %s, %s, %s);", (user_id, user_name, encrypted_pass, first_name, last_name, phone, email))
 
                 entered_answers_and_hints = ((user_id, 1, question1, hint1), (user_id, 2, question2, hint2), (user_id, 3, question3, hint3), \
                     (user_id, 4, question4, hint4), (user_id, 5, question1, hint5))
@@ -141,8 +144,10 @@ def after_login():
             email_userid_password_phone = cursor.fetchall() #row = [('password')]
             email_userid_password_phone = list(itertools.chain(*email_userid_password_phone))
             print(email_userid_password_phone[2], password, type(email_userid_password_phone[0]), type(password))
-
-            if email_userid_password_phone[2] == password:
+            
+            p=password.encode('utf-8')
+            db_password = email_userid_password_phone[2]
+            if bcrypt.checkpw(p, db_password.encode('utf-8')):
                     session['id'] = email_userid_password_phone[1]
                     session['email'] = email_userid_password_phone[0]
                     email = session['email']
